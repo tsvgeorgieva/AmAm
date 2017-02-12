@@ -15,12 +15,14 @@ namespace NutritionRecommendationEngine.Engine
         public IEnumerable<DietaryReferenceIntake> MaxWeight { get; private set; }
         public int IterationCount { get; private set; }
         public IEnumerable<Food> Items { get; private set; }
+        public bool IsDebug { get; set; }
 
-        public Engine(IInitializer initializer, ICrossover crossoverer, IMutator mutator)
+        public Engine(IInitializer initializer, ICrossover crossoverer, IMutator mutator, bool isDebug)
         {
             PopulationInitializer = initializer;
             PopulationMutator = mutator;
             PopulationCrossoverer = crossoverer;
+            IsDebug = isDebug;
         }
 
         public IMeal Solve(IEnumerable<DietaryReferenceIntake> maxWeight, IEnumerable<Food> items, int iterationCount)
@@ -33,7 +35,11 @@ namespace NutritionRecommendationEngine.Engine
 
             for (int i = 0; i < IterationCount; i++)
             {
-                Console.WriteLine($"{population.GetFittest().TotalCostSum:F2}");
+                if (IsDebug)
+                {
+                    Console.WriteLine($"{population.GetFittest().TotalCostSum:F2}");
+                }
+
                 population.RemoveNotFit();
                 PopulationCrossoverer.CrossoverPopulation(population);
                 PopulationMutator.MutatePopulation(population);
