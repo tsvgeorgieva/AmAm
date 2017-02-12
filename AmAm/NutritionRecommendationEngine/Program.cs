@@ -18,7 +18,8 @@ namespace NutritionRecommendationEngine
             Console.WriteLine("Hello, I am AmAm! I will recommend what foods you can eat in order to achieve your daily nutritional targets.");
             Console.WriteLine("Available commands:");
             Console.WriteLine("'Start fresh' - clears all previously entered data");
-            Console.WriteLine("'I ate' - saves food intake with the first matching food in the db");
+            Console.WriteLine("'I ate' - saves food intake");
+            Console.WriteLine("'I like' - saves food you like and recommends only from your liked foods");
             Console.WriteLine("'Give me my meal' - starts calculating the recomendations");
             Console.WriteLine("'debug on/off' - turns debug mode on and off");
             Console.WriteLine("'End' - exits the program");
@@ -41,15 +42,49 @@ namespace NutritionRecommendationEngine
                 {
                     break;
                 }
+                else if (command.Equals("debug on", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    isDebug = true;
+                }
+                else if (command.Equals("debug off", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    isDebug = false;
+                }
                 else if (command.Equals("start fresh", StringComparison.InvariantCultureIgnoreCase))
                 {
                     userDris = db.DietaryReferenceIntakes.ToList();
                     userFoods = allFoods;
                 }
+                else if (command.StartsWith("I like", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Console.WriteLine("Enter food name:");
+                    var foodName = Console.ReadLine().ToUpperInvariant();
+                    var foodsMatching = allFoods.Where(f => f.Name.Contains(foodName)).ToList();
+                    
+                    foreach (var food in foodsMatching)
+                    {
+                        Console.WriteLine($"{food.Id} {food.Name}");
+                    }
+                    Console.WriteLine("Please enter food id:");
+                    var foodid = int.Parse(Console.ReadLine());
+                    var foodEaten = foodsMatching.FirstOrDefault(f => f.Id == foodid);
+                    if (foodEaten == null)
+                    {
+                        Console.WriteLine("I can't find matches for this search, please try again!");
+                        continue;
+                    }
+
+                    if(userFoods == allFoods)
+                    {
+                        userFoods = new List<Food>();
+                    }
+
+                    userFoods.Add(foodEaten);
+                }
                 else if (command.StartsWith("I ate", StringComparison.InvariantCultureIgnoreCase))
                 {
                     Console.WriteLine("Enter food name:");
-                    var foodName = Console.ReadLine();
+                    var foodName = Console.ReadLine().ToUpperInvariant();
                     var foodsMatching = allFoods.Where(f => f.Name.Contains(foodName)).ToList();
                     Food foodEaten = null;
                     foreach (var food in foodsMatching)
@@ -95,22 +130,18 @@ namespace NutritionRecommendationEngine
             var solver = new Engine.Engine(new RandomInitializer(), new Crossoverer(), new Mutator(), isDebug);
             var solution = solver.Solve(dris, foods, iterationCount);
 
-            if (isDebug)
-            {
-                Console.WriteLine($"{solution.TotalCostSum:F2}");
-            }
-
             Console.WriteLine();
             Console.WriteLine("Your chosen meal:");
             foreach (var item in solution.FoodIntakes)
             {
-                Console.WriteLine($"{item.Intake * 100:F0}g {item.Food.Name}");
+                Console.WriteLine($"{item.Intake * 100,3:F0}g {item.Food.Name}");
             }
             Console.WriteLine();
             foreach (var dri in solution.DietaryReferenceIntakes)
             {
                 Console.WriteLine($"{dri.NutrientName,-10} Min: {dri.Min,-7:F2} Max: {dri.Max,-7:F2} Meal: {solution.TotalNutrients.GetNutrientValue(dri.NutrientName),-7:F2} Diff: {solution.TotalCost.GetNutrientValue(dri.NutrientName),-7:F2}");
             }
+            Console.WriteLine($"Total diff: {solution.TotalCostSum:F2}");
             Console.WriteLine();
         }
     }

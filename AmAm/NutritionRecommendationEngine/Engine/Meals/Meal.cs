@@ -73,10 +73,6 @@ namespace NutritionRecommendationEngine.Engine.Meals
             //{
             //    return 1;
             //}
-            if (TotalCostSum == 0)
-            {
-                throw new Exception();
-            }
 
             if (TotalCostSum == other.TotalCostSum)
             {

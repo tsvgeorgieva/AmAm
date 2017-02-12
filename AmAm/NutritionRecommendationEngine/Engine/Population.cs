@@ -50,7 +50,7 @@ namespace NutritionRecommendationEngine.Engine
 
         public void RemoveNotFit()
         {
-            if (RemovePart <= 0.5) //todo
+            if (RemovePart <= 0.5)
             {
                 var removeKeys = SortedMeals.Skip(KeepCount).ToList(); // first is best
                 foreach (var key in removeKeys)
