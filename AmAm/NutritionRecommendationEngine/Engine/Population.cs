@@ -17,7 +17,7 @@ namespace NutritionRecommendationEngine.Engine
         public OrderedBag<IMeal> SortedMeals { get; private set; }
         public OrderedBag<IMeal> Children { get; private set; }
 
-        public Population(IEnumerable<DietaryReferenceIntake> dris, IEnumerable<Food> foods, int count = 10, double removePart = 0.2)
+        public Population(IEnumerable<DietaryReferenceIntake> dris, IEnumerable<Food> foods, int count = 50, double removePart = 0.6)
         {
             Count = count;
             RemovePart = removePart;

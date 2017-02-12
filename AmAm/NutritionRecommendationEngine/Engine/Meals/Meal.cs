@@ -24,7 +24,16 @@ namespace NutritionRecommendationEngine.Engine.Meals
 
         public bool AddFoodIntake(FoodIntake item)
         {
-            FoodIntakes.Add(item);
+            var existing = FoodIntakes.FirstOrDefault(fi => fi.Food.Id == item.Food.Id);
+            if (existing != null)
+            {
+                return false;
+                //existing.Intake = Math.Min(4, existing.Intake + item.Intake);
+            }
+            else
+            {
+                FoodIntakes.Add(item);
+            }
             RecalculateNutrients();
             return true;
         }
@@ -64,7 +73,7 @@ namespace NutritionRecommendationEngine.Engine.Meals
             //{
             //    return 1;
             //}
-            if(TotalCostSum == 0)
+            if (TotalCostSum == 0)
             {
                 throw new Exception();
             }
@@ -109,6 +118,17 @@ namespace NutritionRecommendationEngine.Engine.Meals
                 TotalCost.SetNutrientValue(dri.NutrientName, diff);
                 TotalCostSum += diff;
             }
+        }
+
+        public void ChangeIntake(FoodIntake item, double newValue)
+        {
+            FoodIntakes.Remove(item);
+            FoodIntakes.Add(new FoodIntake
+            {
+                Food = item.Food,
+                Intake = newValue
+            });
+            RecalculateNutrients();
         }
     }
 }

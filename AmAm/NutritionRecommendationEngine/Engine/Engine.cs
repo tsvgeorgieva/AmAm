@@ -33,7 +33,7 @@ namespace NutritionRecommendationEngine.Engine
 
             for (int i = 0; i < IterationCount; i++)
             {
-                Console.WriteLine(population.GetFittest().TotalCostSum);
+                Console.WriteLine($"{population.GetFittest().TotalCostSum:F2}");
                 population.RemoveNotFit();
                 PopulationCrossoverer.CrossoverPopulation(population);
                 PopulationMutator.MutatePopulation(population);

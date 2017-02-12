@@ -21,8 +21,16 @@ namespace NutritionRecommendationEngine.Engine.Mutator
         {
             if (knapsack.FoodIntakesCount > 0)
             {
-                var removeIndex = MyRandom.Next(knapsack.FoodIntakesCount);
-                knapsack.Remove(removeIndex);
+                if (MyRandom.Next(0, 1) < 0.5)
+                {
+                    var removeIndex = MyRandom.Next(knapsack.FoodIntakesCount);
+                    knapsack.Remove(removeIndex);
+                }
+                else
+                {
+                    var intakeToChange = knapsack.FoodIntakes.GetRandomMember();
+                    knapsack.ChangeIntake(intakeToChange, MyRandom.Next(0.1, 4));
+                }
             }
 
             knapsack.Fill(population.Foods);

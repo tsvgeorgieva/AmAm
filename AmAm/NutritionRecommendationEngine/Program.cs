@@ -15,22 +15,23 @@ namespace NutritionRecommendationEngine
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<AmAmDbContext, Configuration>());
 
             var db = new AmAmDbContext();
-            //var food = db.Foods.Where(f => f.Calories < 10).ToList();
-            //Console.WriteLine(food.Count);
 
             int iterationCount = 500;
             var dris = db.DietaryReferenceIntakes.ToList();
             var foods = db.Foods.ToList();
             var solver = new Engine.Engine(new RandomInitializer(), new Crossoverer(), new Mutator());
             var solution = solver.Solve(dris, foods, iterationCount);
-            Console.WriteLine(solution.TotalCostSum);
+            Console.WriteLine($"{solution.TotalCostSum:F2}");
+            Console.WriteLine();
+            Console.WriteLine("Your chosen meal:");
             foreach (var item in solution.FoodIntakes)
             {
                 Console.WriteLine($"{item.Intake * 100:F0}g {item.Food.Name}");
             }
+            Console.WriteLine();
             foreach (var dri in solution.DietaryReferenceIntakes)
             {
-                Console.WriteLine($"{dri.NutrientName} Min: {dri.Min:F2} Max: {dri.Max:F2} Meal: {solution.TotalNutrients.GetNutrientValue(dri.NutrientName):F2}");
+                Console.WriteLine($"{dri.NutrientName,-10} Min: {dri.Min,-7:F2} Max: {dri.Max,-7:F2} Meal: {solution.TotalNutrients.GetNutrientValue(dri.NutrientName),-7:F2} Diff: {solution.TotalCost.GetNutrientValue(dri.NutrientName),-7:F2}");
             }
         }
     }

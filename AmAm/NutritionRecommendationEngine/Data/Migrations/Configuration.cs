@@ -12,8 +12,8 @@ namespace NutritionRecommendationEngine.Migrations
         private static readonly int IronColumnNum = 12;
         private static readonly int LipidsColumnNum = 6;
         private static readonly int ProteinsColumnNum = 5;
-        private static readonly int VitaminAColumnNum = 32;
-        private static readonly int VitaminB12ColumnNum = 31;
+        private static readonly int VitaminAColumnNum = 33;
+        private static readonly int VitaminB12ColumnNum = 32;
         private static readonly int VitaminCColumnNum = 21;
         private static readonly int ZincColumnNum = 17;
 

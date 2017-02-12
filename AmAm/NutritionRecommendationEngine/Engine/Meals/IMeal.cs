@@ -13,6 +13,7 @@ namespace NutritionRecommendationEngine.Engine.Meals
         int FoodIntakesCount { get; }
         bool AddFoodIntake(FoodIntake item);
         void Remove(int removeIndex);
+        void ChangeIntake(FoodIntake item, double newValue);
         void SetFoodIntakes(IEnumerable<FoodIntake> foodIntakes);
         IEnumerable<FoodIntake> Skip(int skip);
         IEnumerable<FoodIntake> Take(int take);
