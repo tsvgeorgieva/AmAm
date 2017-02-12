@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NutritionRecommendationEngine
+﻿namespace NutritionRecommendationEngine
 {
     public class DietaryReferenceIntake
     {
@@ -13,5 +7,8 @@ namespace NutritionRecommendationEngine
         public double? EstimatedAverageRequirement { get; set; }
         public double? RecommendedDietaryAllowance { get; set; }
         public double? TolerableUpperIntakeLevel { get; set; }
+
+        public double? Min => RecommendedDietaryAllowance ?? EstimatedAverageRequirement;
+        public double? Max => TolerableUpperIntakeLevel;
     }
 }

@@ -2,7 +2,6 @@ namespace NutritionRecommendationEngine.Migrations
 {
     using OfficeOpenXml;
     using System.Data.Entity.Migrations;
-    using System.IO;
     using System.Linq;
 
     internal sealed class Configuration : DbMigrationsConfiguration<AmAmDbContext>

@@ -45,6 +45,18 @@
       <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Practices.EnterpriseLibrary.Common.dll.3.1.0\lib\2.0\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ObjectBuilder, Version=1.0.51206.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Practices.ObjectBuilder.dll.3.1.0\lib\2.0\Microsoft.Practices.ObjectBuilder.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SoftUni.Wintellect.PowerCollections, Version=1.1.5733.22550, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SoftUni.Wintellect.PowerCollections.1.1.5733.22550\lib\net20\SoftUni.Wintellect.PowerCollections.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -56,16 +68,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AmAmDbContext.cs" />
-    <Compile Include="Entities\Food.cs" />
-    <Compile Include="Entities\FoodIntake.cs" />
-    <Compile Include="Entities\DietaryReferenceIntake.cs" />
-    <Compile Include="Migrations\201702102058544_InitialCreate.cs" />
-    <Compile Include="Migrations\201702102058544_InitialCreate.Designer.cs">
+    <Compile Include="Data\AmAmDbContext.cs" />
+    <Compile Include="Data\Entities\Food.cs" />
+    <Compile Include="Data\Entities\FoodIntake.cs" />
+    <Compile Include="Data\Entities\DietaryReferenceIntake.cs" />
+    <Compile Include="Engine\Crossover\Crossoverer.cs" />
+    <Compile Include="Engine\Initializer\RandomInitializer.cs" />
+    <Compile Include="Engine\Meals\IMeal.cs" />
+    <Compile Include="Engine\Meals\Meal.cs" />
+    <Compile Include="Data\Migrations\201702102058544_InitialCreate.cs" />
+    <Compile Include="Data\Migrations\201702102058544_InitialCreate.Designer.cs">
       <DependentUpon>201702102058544_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201702102121000_ChangeDietaryReferenceIntake.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Data\Migrations\201702102121000_ChangeDietaryReferenceIntake.cs" />
+    <Compile Include="Data\Migrations\Configuration.cs" />
+    <Compile Include="Engine\Crossover\ICrossover.cs" />
+    <Compile Include="Engine\Engine.cs" />
+    <Compile Include="Engine\Initializer\IInitializer.cs" />
+    <Compile Include="Engine\Meals\MealFactory.cs" />
+    <Compile Include="Engine\Mutator\IMutator.cs" />
+    <Compile Include="Engine\Mutator\Mutator.cs" />
+    <Compile Include="Engine\Population.cs" />
+    <Compile Include="MyRandom.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -76,7 +100,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201702102058544_InitialCreate.resx">
+    <EmbeddedResource Include="Data\Migrations\201702102058544_InitialCreate.resx">
       <DependentUpon>201702102058544_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>

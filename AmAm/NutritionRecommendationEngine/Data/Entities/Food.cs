@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Reflection;
 
 namespace NutritionRecommendationEngine
 {
@@ -21,7 +17,16 @@ namespace NutritionRecommendationEngine
         public double VitaminA { get; set; }
         public double VitaminB12 { get; set; }
 
-        public virtual List<FoodIntake> FoodIntakes { get; set; }
+        public double GetNutrientValue(string nutrientName)
+        {
+            return (double)GetType().GetProperty(nutrientName).GetValue(this, null);
+        }
+
+        public void SetNutrientValue(string nutrientName, double value)
+        {
+            var prop = GetType().GetProperty(nutrientName);
+            prop.SetValue(this, value, null);
+        }
 
         public override string ToString()
         {
